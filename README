@@ -1,0 +1,89 @@
+pict2png(1)		  BSD General Commands Manual		   pict2png(1)
+
+NAME
+     pict2png -- convert Macintosh PICT images to PNG images
+
+SYNOPSIS
+     pict2png [options] source [destination]
+
+DESCRIPTION
+     pict2png is a utility for converting files in the Macintosh PICT image
+     format to the PNG image format.  Images with an associated (premulti-
+     plied) alpha channel are detected and properly converted as needed.
+
+OPTIONS
+     pict2png supports the following command line options.
+
+     --delete
+	      Delete the original PICT files as each is successfully converted
+	      to the PNG format (use with caution)
+
+     --dry-run
+	      Runs through the process of loading and converting each PICT
+	      file, but does not write out PNG file or delete the PICT files.
+
+     --bkgnd-ratio=RATIO
+	      Adjust required ratio of detected background color to other
+	      background colors that may be present (defaults to 0.8)
+
+     --force  Forces conversion of files that have issues (detected background
+	      color ratio not sufficient; associated background not black or
+	      white; failure to determine the alpha channel type)
+
+     --verbose
+	      Displays additional status messages for each PICT file.
+
+     --quiet  Do not display summary at end of conversion process.
+
+     --help   Display usage information
+
+     --version
+	      Display version information
+
+EXAMPLES
+     pict2png /path/to/source.pct
+
+     The specified PICT file is converted and the resulting PNG file placed
+     next to it in the same folder.  Any existing PNG file is overwritten.
+
+     pict2png /path/to/source/folder --delete
+
+     The specified folder is traversed and any PICT files that are found are
+     converted.  The resulting PNG files are placed next to the original PICT
+     files.  Any existing PNG files are overwritten and the original PICT
+     files are deleted.
+
+     pict2png /path/to/source/folder /path/to/destination/folder
+
+     The source folder is traversed and any PICT files that are found are con-
+     verted.  The directory structure of the source folder is created in the
+     destination folder and resulting PNG files are placed in the appropriate
+     location.	Any existing PNG files are overwritten.
+
+RETURN CODES
+     The pict2png utility returns 0 on success, and >0 if an error occurs.
+
+     1 : Command syntax error; no files processed.
+
+     2 : Error processing one or more files.
+
+AUTHOR
+     Brian D. Wells <spam_brian@me.com>
+
+COPYRIGHT
+     Copyright (C) 2010 Brian D. Wells
+
+     pict2png is free software: you can redistribute it and/or modify it under
+     the terms of the GNU General Public License as published by the Free
+     Software Foundation, either version 3 of the License, or (at your option)
+     any later version.
+
+     pict2png is distributed in the hope that it will be useful, but WITHOUT
+     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+     FITNESS FOR A PARTICULAR PURPOSE.	See the GNU General Public License for
+     more details.
+
+     You should have received a copy of the GNU General Public License along
+     with pict2png.  If not, see <http://www.gnu.org/licenses/>.
+
+Darwin			       February 13, 2010			Darwin
