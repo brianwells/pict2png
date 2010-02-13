@@ -1,0 +1,312 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8DD76FAC0486AB0100D96B5E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.c */; settings = {ATTRIBUTES = (); }; };
+		8DD76FB00486AB0100D96B5E /* pict2png.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6A0FF2C0290799A04C91782 /* pict2png.1 */; };
+		C2595CD210D89025003F3E07 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CD110D89025003F3E07 /* libz.dylib */; };
+		C2595CDF10D8913A003F3E07 /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CDC10D8913A003F3E07 /* libbz2.dylib */; };
+		C2595CE010D8913A003F3E07 /* libm.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CDD10D8913A003F3E07 /* libm.dylib */; };
+		C2595CE110D8913A003F3E07 /* libpthread.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CDE10D8913A003F3E07 /* libpthread.dylib */; };
+		C2595CE810D891B8003F3E07 /* libICE.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CE310D891B8003F3E07 /* libICE.dylib */; };
+		C2595CE910D891B8003F3E07 /* libSM.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CE410D891B8003F3E07 /* libSM.dylib */; };
+		C2595CEA10D891B8003F3E07 /* libX11.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CE510D891B8003F3E07 /* libX11.dylib */; };
+		C2595CEB10D891B8003F3E07 /* libXext.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CE610D891B8003F3E07 /* libXext.dylib */; };
+		C2595CEC10D891B8003F3E07 /* libXt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2595CE710D891B8003F3E07 /* libXt.dylib */; };
+		C2AE258110DFD78E00F31B59 /* libfreetype.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AE258010DFD78E00F31B59 /* libfreetype.dylib */; };
+		C2AE258310DFD78E00F31B59 /* libjpeg.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AE258210DFD78E00F31B59 /* libjpeg.dylib */; };
+		C2AE258510DFD78E00F31B59 /* libMagickCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AE258410DFD78E00F31B59 /* libMagickCore.dylib */; };
+		C2AE258710DFD78E00F31B59 /* libMagickWand.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AE258610DFD78E00F31B59 /* libMagickWand.dylib */; };
+		C2AE258810DFD78E00F31B59 /* libpng.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C2AE257B10DFD48F00F31B59 /* libpng.dylib */; };
+		C2DFA51710E118B6003CBC7F /* pict2png.c in Sources */ = {isa = PBXBuildFile; fileRef = C2DFA51610E118B6003CBC7F /* pict2png.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76FAF0486AB0100D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/local/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				8DD76FB00486AB0100D96B5E /* pict2png.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		08FB7796FE84155DC02AAC07 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		8DD76FB20486AB0100D96B5E /* pict2png */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = pict2png; sourceTree = BUILT_PRODUCTS_DIR; };
+		C257B4681127213400C3535F /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		C257B53511275B5700C3535F /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		C2595CD110D89025003F3E07 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
+		C2595CDC10D8913A003F3E07 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
+		C2595CDD10D8913A003F3E07 /* libm.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libm.dylib; path = /usr/lib/libm.dylib; sourceTree = "<absolute>"; };
+		C2595CDE10D8913A003F3E07 /* libpthread.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpthread.dylib; path = /usr/lib/libpthread.dylib; sourceTree = "<absolute>"; };
+		C2595CE310D891B8003F3E07 /* libICE.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libICE.dylib; path = /usr/X11/lib/libICE.dylib; sourceTree = "<absolute>"; };
+		C2595CE410D891B8003F3E07 /* libSM.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSM.dylib; path = /usr/X11/lib/libSM.dylib; sourceTree = "<absolute>"; };
+		C2595CE510D891B8003F3E07 /* libX11.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libX11.dylib; path = /usr/X11/lib/libX11.dylib; sourceTree = "<absolute>"; };
+		C2595CE610D891B8003F3E07 /* libXext.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXext.dylib; path = /usr/X11/lib/libXext.dylib; sourceTree = "<absolute>"; };
+		C2595CE710D891B8003F3E07 /* libXt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXt.dylib; path = /usr/X11/lib/libXt.dylib; sourceTree = "<absolute>"; };
+		C2AE257B10DFD48F00F31B59 /* libpng.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng.dylib; path = /usr/local/lib/libpng.dylib; sourceTree = "<absolute>"; };
+		C2AE258010DFD78E00F31B59 /* libfreetype.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libfreetype.dylib; path = /usr/local/lib/libfreetype.dylib; sourceTree = "<absolute>"; };
+		C2AE258210DFD78E00F31B59 /* libjpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libjpeg.dylib; path = /usr/local/lib/libjpeg.dylib; sourceTree = "<absolute>"; };
+		C2AE258410DFD78E00F31B59 /* libMagickCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libMagickCore.dylib; path = /usr/local/lib/libMagickCore.dylib; sourceTree = "<absolute>"; };
+		C2AE258610DFD78E00F31B59 /* libMagickWand.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libMagickWand.dylib; path = /usr/local/lib/libMagickWand.dylib; sourceTree = "<absolute>"; };
+		C2DFA51510E118B6003CBC7F /* pict2png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pict2png.h; sourceTree = "<group>"; };
+		C2DFA51610E118B6003CBC7F /* pict2png.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pict2png.c; sourceTree = "<group>"; };
+		C6A0FF2C0290799A04C91782 /* pict2png.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = pict2png.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76FAD0486AB0100D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2595CD210D89025003F3E07 /* libz.dylib in Frameworks */,
+				C2595CDF10D8913A003F3E07 /* libbz2.dylib in Frameworks */,
+				C2595CE010D8913A003F3E07 /* libm.dylib in Frameworks */,
+				C2595CE110D8913A003F3E07 /* libpthread.dylib in Frameworks */,
+				C2595CE810D891B8003F3E07 /* libICE.dylib in Frameworks */,
+				C2595CE910D891B8003F3E07 /* libSM.dylib in Frameworks */,
+				C2595CEA10D891B8003F3E07 /* libX11.dylib in Frameworks */,
+				C2595CEB10D891B8003F3E07 /* libXext.dylib in Frameworks */,
+				C2595CEC10D891B8003F3E07 /* libXt.dylib in Frameworks */,
+				C2AE258110DFD78E00F31B59 /* libfreetype.dylib in Frameworks */,
+				C2AE258310DFD78E00F31B59 /* libjpeg.dylib in Frameworks */,
+				C2AE258510DFD78E00F31B59 /* libMagickCore.dylib in Frameworks */,
+				C2AE258710DFD78E00F31B59 /* libMagickWand.dylib in Frameworks */,
+				C2AE258810DFD78E00F31B59 /* libpng.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* pict2png */ = {
+			isa = PBXGroup;
+			children = (
+				C2595CC910D88FE8003F3E07 /* Libraries */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6A0FF2B0290797F04C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			comments = "pict2png.xcodeproj\n\nCopyright (C) 2010 Brian D. Wells\n\nThis file is part of pict2png.\n\npict2png is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n(at your option) any later version.\n\npict2png is distributed in the hope that it will be useful,\nbut WITHOUT ANY WARRANTY; without even the implied warranty of\nMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\nGNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License\nalong with pict2png.  If not, see <http://www.gnu.org/licenses/>.\n\nAuthor: Brian D. Wells <spam_brian@me.com>\n";
+			name = pict2png;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7796FE84155DC02AAC07 /* main.c */,
+				C2DFA51510E118B6003CBC7F /* pict2png.h */,
+				C2DFA51610E118B6003CBC7F /* pict2png.c */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76FB20486AB0100D96B5E /* pict2png */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C2595CC910D88FE8003F3E07 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				C2AE258010DFD78E00F31B59 /* libfreetype.dylib */,
+				C2AE258210DFD78E00F31B59 /* libjpeg.dylib */,
+				C2AE258410DFD78E00F31B59 /* libMagickCore.dylib */,
+				C2AE258610DFD78E00F31B59 /* libMagickWand.dylib */,
+				C2AE257B10DFD48F00F31B59 /* libpng.dylib */,
+				C2595CE310D891B8003F3E07 /* libICE.dylib */,
+				C2595CE410D891B8003F3E07 /* libSM.dylib */,
+				C2595CE510D891B8003F3E07 /* libX11.dylib */,
+				C2595CE610D891B8003F3E07 /* libXext.dylib */,
+				C2595CE710D891B8003F3E07 /* libXt.dylib */,
+				C2595CDC10D8913A003F3E07 /* libbz2.dylib */,
+				C2595CDE10D8913A003F3E07 /* libpthread.dylib */,
+				C2595CDD10D8913A003F3E07 /* libm.dylib */,
+				C2595CD110D89025003F3E07 /* libz.dylib */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		C6A0FF2B0290797F04C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				C6A0FF2C0290799A04C91782 /* pict2png.1 */,
+				C257B4681127213400C3535F /* COPYING */,
+				C257B53511275B5700C3535F /* README */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76FA90486AB0100D96B5E /* pict2png */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB928508733DD80010E9CD /* Build configuration list for PBXNativeTarget "pict2png" */;
+			buildPhases = (
+				8DD76FAB0486AB0100D96B5E /* Sources */,
+				8DD76FAD0486AB0100D96B5E /* Frameworks */,
+				8DD76FAF0486AB0100D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = pict2png;
+			productInstallPath = "$(HOME)/bin";
+			productName = pict2png;
+			productReference = 8DD76FB20486AB0100D96B5E /* pict2png */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "pict2png" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* pict2png */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76FA90486AB0100D96B5E /* pict2png */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76FAB0486AB0100D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76FAC0486AB0100D96B5E /* main.c in Sources */,
+				C2DFA51710E118B6003CBC7F /* pict2png.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB928608733DD80010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_OPENMP_SUPPORT = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/local/libjpeg/lib,
+					/usr/local/libpng/lib,
+					"/usr/X11/lib/**",
+					/usr/X11/lib,
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = pict2png;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB928708733DD80010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_OPENMP_SUPPORT = YES;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/usr/local/libjpeg/lib,
+					/usr/local/libpng/lib,
+					"/usr/X11/lib/**",
+					/usr/X11/lib,
+					"\"$(SRCROOT)\"",
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = pict2png;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		1DEB928A08733DD80010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					/usr/local/include/ImageMagick,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB928B08733DD80010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include,
+					/usr/local/include/ImageMagick,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928508733DD80010E9CD /* Build configuration list for PBXNativeTarget "pict2png" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB928608733DD80010E9CD /* Debug */,
+				1DEB928708733DD80010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "pict2png" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB928A08733DD80010E9CD /* Debug */,
+				1DEB928B08733DD80010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

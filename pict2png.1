@@ -1,0 +1,86 @@
+.Dd February 13, 2010
+.Dt pict2png 1
+.Os Darwin
+.Sh NAME
+.Nm pict2png
+.Nd convert Macintosh PICT images to PNG images
+.Sh SYNOPSIS
+.Nm
+.Op options
+source
+.Op destination
+.Sh DESCRIPTION
+.Nm
+is a utility for converting files in the Macintosh PICT image format to the PNG image format.
+Images with an associated (premultiplied) alpha channel are detected and properly converted as needed.
+.Sh OPTIONS
+.Nm
+supports the following command line options.
+.Bl -tag -width -indent
+.It Fl -delete
+Delete the original PICT files as each is successfully converted to the PNG format (use with caution)
+.It Fl -dry-run
+Runs through the process of loading and converting each PICT file, but does not write out PNG file or delete the PICT files.
+.It Fl -bkgnd-ratio=RATIO
+Adjust required ratio of detected background color to other background colors that may be present (defaults to 0.8)
+.It Fl -force
+Forces conversion of files that have issues
+(detected background color ratio not sufficient;
+associated background not black or white;
+failure to determine the alpha channel type)
+.It Fl -verbose
+Displays additional status messages for each PICT file.
+.It Fl -quiet
+Do not display summary at end of conversion process.
+.It Fl -help
+Display usage information
+.It Fl -version
+Display version information
+.El
+.Sh EXAMPLES
+.Nm
+/path/to/source.pct
+.Pp
+The specified PICT file is converted and the resulting PNG file placed next to it in the same folder.
+Any existing PNG file is overwritten.
+.Pp
+.Nm
+/path/to/source/folder
+--delete
+.Pp
+The specified folder is traversed and any PICT files that are found are converted.
+The resulting PNG files are placed next to the original PICT files.
+Any existing PNG files are overwritten and the original PICT files are deleted.
+.Pp
+.Nm
+/path/to/source/folder /path/to/destination/folder
+.Pp
+The source folder is traversed and any PICT files that are found are converted.
+The directory structure of the source folder is created in the destination folder
+and resulting PNG files are placed in the appropriate location.
+Any existing PNG files are overwritten.
+.Sh RETURN CODES
+The
+.Nm
+utility returns 0 on success, and >0 if an error occurs.
+.Pp
+1 : Command syntax error; no files processed.
+.Pp
+2 : Error processing one or more files.
+.Sh AUTHOR
+Brian D. Wells <spam_brian@me.com>
+.Sh COPYRIGHT
+Copyright (C) 2010 Brian D. Wells
+.Pp
+pict2png is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+.Pp
+pict2png is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+.Pp
+You should have received a copy of the GNU General Public License
+along with pict2png.  If not, see <http://www.gnu.org/licenses/>.
