@@ -353,7 +353,7 @@ void conv_image(ConvertContext *context) {
 		dispatch_group_async_f(context->conv_group, dispatch_get_main_queue(), context, (void (*)(void *))finish_image);
     } else {
 		// move to next step
-		dispatch_group_async_f(context->conv_group, context->conv_queue, context, (void (*)(void *))save_image);
+		dispatch_group_async_f(context->conv_group, context->save_queue, context, (void (*)(void *))save_image);
 	}
 }
 
