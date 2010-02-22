@@ -26,6 +26,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
 #include <sys/errno.h>
 #include <dispatch/dispatch.h>
 
@@ -39,9 +40,9 @@
 
 typedef struct bkgnd_metric {
     unsigned long count;
-    double red;
-    double grn;
-    double blu;
+    unsigned char red;
+    unsigned char grn;
+    unsigned char blu;
 } BackgroundMetric;
 
 void process_image(ConvertContext *context) {
@@ -80,7 +81,7 @@ void load_image(ConvertContext *context) {
                 asprintf(&context->results.message, "Error allocating memory for pixel data: %s\n",context->src_path);
                 result += RESULT_ERROR;
             } else {
-                if (MagickExportImagePixels(context->mw, 0, 0, context->imageWidth, context->imageHeight, "ARGB", DoublePixel, context->pixels) == MagickFalse) {
+                if (MagickExportImagePixels(context->mw, 0, 0, context->imageWidth, context->imageHeight, "ARGB", CharPixel, context->pixels) == MagickFalse) {
                     error_desc = MagickGetException(context->mw, &error_type);
                     asprintf(&context->results.message, "Error exporting pixel data (%s): %s\n",error_desc,context->src_path);
                     error_desc = (char *)MagickRelinquishMemory(error_desc);
@@ -110,11 +111,11 @@ void conv_image(ConvertContext *context) {
     unsigned long bkgnd_pixels;
     
     unsigned long pixel_index;
-    double red;
-    double grn;
-    double blu;
-    double alp;
-    double inv;
+    int red;
+    int grn;
+    int blu;
+    int alp;
+    int inv;
     int alpha_other = 0;
     int alpha_match = 0;
     int alpha_type = ALPHA_TYPE_NONE;
@@ -130,13 +131,13 @@ void conv_image(ConvertContext *context) {
         }
         
         // load starting background metrics
-        backgrounds[BKGND_BLACK].red = 0.0;
-        backgrounds[BKGND_BLACK].grn = 0.0;
-        backgrounds[BKGND_BLACK].blu = 0.0;
+        backgrounds[BKGND_BLACK].red = 0;
+        backgrounds[BKGND_BLACK].grn = 0;
+        backgrounds[BKGND_BLACK].blu = 0;
         backgrounds[BKGND_BLACK].count = 0;        
-        backgrounds[BKGND_WHITE].red = 1.0;
-        backgrounds[BKGND_WHITE].grn = 1.0;
-        backgrounds[BKGND_WHITE].blu = 1.0;
+        backgrounds[BKGND_WHITE].red = 255;
+        backgrounds[BKGND_WHITE].grn = 255;
+        backgrounds[BKGND_WHITE].blu = 255;
         backgrounds[BKGND_WHITE].count = 0;        
         bkgnd_count = 2;
         
@@ -152,7 +153,7 @@ void conv_image(ConvertContext *context) {
                 blu = context->pixels[pixel_index].blu;
                 alp = context->pixels[pixel_index].alp;
                 // transparent pixels only...
-                if (alp == 0.0) {
+                if (alp == 0) {
                     bkgnd_pixels++;
                     // look for color in metrics
                     for (bkgnd_index = 0; bkgnd_index < bkgnd_count; bkgnd_index++) {
@@ -206,33 +207,20 @@ void conv_image(ConvertContext *context) {
             while (pixel_index < context->pixel_count) {
                 alp = context->pixels[pixel_index].alp;
 
-                if (alp > 0.0 && alp < 1.0) {
+                if (alp > 0 && alp < 255) {
                     red = context->pixels[pixel_index].red;
                     grn = context->pixels[pixel_index].grn;
                     blu = context->pixels[pixel_index].blu;
-                    inv = 1.0 - alp;
-                    
-                    // would just subtract inverse of alpha, but rounding
-                    // issues force us to special-case a value of 1.0
-                    if (backgrounds[bkgnd_selected].red == 1.0) {
-                        red = (red == 1.0 ? alp : red - inv);
-                    } else if (backgrounds[bkgnd_selected].red != 0.0) {
-                        red = red - (inv * backgrounds[bkgnd_selected].red);
-                    }
-                    if (backgrounds[bkgnd_selected].grn == 1.0) {
-                        grn = (grn == 1.0 ? alp : grn - inv);
-                    } else if (backgrounds[bkgnd_selected].grn != 0.0) {
-                        grn = grn - (inv * backgrounds[bkgnd_selected].grn);
-                    }
-                    if (backgrounds[bkgnd_selected].blu == 1.0) {
-                        blu = (blu == 1.0 ? alp : blu - inv);
-                    } else if (backgrounds[bkgnd_selected].blu != 0.0) {
-                        blu = blu - (inv * backgrounds[bkgnd_selected].blu);
-                    }
+                    inv = 255 - alp;
+
+                    red = red - (int)roundf((float)(inv * backgrounds[bkgnd_selected].red)/255.0);
+                    grn = grn - (int)roundf((float)(inv * backgrounds[bkgnd_selected].grn)/255.0);
+                    blu = blu - (int)roundf((float)(inv * backgrounds[bkgnd_selected].blu)/255.0);
+
                     // check range of pixel
-                    if (red <= alp && red >= 0.0 &&
-                        blu <= alp && blu >= 0.0 &&
-                        grn <= alp && grn >= 0.0) {
+                    if (red <= alp && red >= 0 &&
+                        blu <= alp && blu >= 0 &&
+                        grn <= alp && grn >= 0) {
                         alpha_match++;
                     } else {
                         alpha_other++;
@@ -248,7 +236,7 @@ void conv_image(ConvertContext *context) {
                 if (bkgnd_selected != BKGND_BLACK && bkgnd_selected != BKGND_WHITE) {
                     if (!context->options.force) {
                         asprintf(&context->results.message,
-								 "Invalid background - must be black or white (R:%g G:%g B:%g): %s\n",
+								 "Invalid background - must be black or white (R:%hhu G:%hhu B:%hhu): %s\n",
                                  backgrounds[bkgnd_selected].red,
                                  backgrounds[bkgnd_selected].grn,
                                  backgrounds[bkgnd_selected].blu,
@@ -275,9 +263,9 @@ void conv_image(ConvertContext *context) {
                 grn = context->pixels[pixel_index].grn;
                 blu = context->pixels[pixel_index].blu;
                 alp = context->pixels[pixel_index].alp;
-                inv = 1.0 - alp;
+                inv = 255 - alp;
 
-                if (alp > 0.0 && alp < 1.0) {
+                if (alp > 0 && alp < 255) {
                     /*
 
                      Standard image composition formula
@@ -293,42 +281,45 @@ void conv_image(ConvertContext *context) {
                     if (bkgnd_selected == BKGND_BLACK) {
                         // this one is easy...
                         // Fg = Comp / A
-                        if (red != 0.0)
-                            context->pixels[pixel_index].red = red / alp;
-                        if (grn != 0.0)
-                            context->pixels[pixel_index].grn = grn / alp;
-                        if (blu != 0.0)
-                            context->pixels[pixel_index].blu = blu / alp;
+                        if (red != 0)
+                            red = (int)roundf((float)(red * 255) / (float)alp);
+                        if (grn != 0)
+                            grn = (int)roundf((float)(grn * 255) / (float)alp);
+                        if (blu != 0)
+                            blu = (int)roundf((float)(blu * 255) / (float)alp);
                     } else if (bkgnd_selected == BKGND_WHITE) {
                         // much harder...
                         // Fg = (Comp - (1 - A)) / A
-                        if (red != 1.0)
-                            context->pixels[pixel_index].red = (red - inv)/alp;
-                        if (grn != 1.0)
-                            context->pixels[pixel_index].grn = (grn - inv)/alp;
-                        if (blu != 1.0)
-                            context->pixels[pixel_index].blu = (blu - inv)/alp;
+                        if (red != 255)
+                            red = (int)roundf((float)((red - inv) * 255) / (float)alp);
+                        if (grn != 255)
+                            grn = (int)roundf((float)((grn - inv) * 255) / (float)alp);
+                        if (blu != 255)
+                            blu = (int)roundf((float)((blu - inv) * 255) / (float)alp);
                     } else {
                         // way harder!  (not sure if this really works)
                         // Fg = (Comp - ((1 - A) * Bg)) / A
-                        context->pixels[pixel_index].red = (red - (inv * backgrounds[bkgnd_selected].red))/alp;
-                        context->pixels[pixel_index].grn = (grn - (inv * backgrounds[bkgnd_selected].grn))/alp;
-                        context->pixels[pixel_index].blu = (blu - (inv * backgrounds[bkgnd_selected].blu))/alp;
+                        red = (int)roundf((float)((red - (int)roundf((float)(inv * backgrounds[bkgnd_selected].red)/255.0)) * 255) / (float)alp);
+                        grn = (int)roundf((float)((grn - (int)roundf((float)(inv * backgrounds[bkgnd_selected].grn)/255.0)) * 255) / (float)alp);
+                        blu = (int)roundf((float)((blu - (int)roundf((float)(inv * backgrounds[bkgnd_selected].blu)/255.0)) * 255) / (float)alp);
                     }
                     // verify pixel data is within range
-                    if (context->pixels[pixel_index].red < 0.0 || context->pixels[pixel_index].red > 1.0 ||
-                        context->pixels[pixel_index].grn < 0.0 || context->pixels[pixel_index].grn > 1.0 ||
-                        context->pixels[pixel_index].blu < 0.0 || context->pixels[pixel_index].blu > 1.0 ||
-                        context->pixels[pixel_index].alp < 0.0 || context->pixels[pixel_index].red > 1.0) {
-                        asprintf(&context->results.message, "pixel %06ld out of range (R:%g G:%g B:%g A:%g) for image: %s\n",
+                    if (red < 0 || red > 255 ||
+                        grn < 0 || grn > 255 ||
+                        blu < 0 || blu > 255 ||
+                        alp < 0 || alp > 255) {
+                        asprintf(&context->results.message, "pixel %06ld out of range (R:%d G:%d B:%d A:%d) for image: %s\n",
                                  pixel_index,
-                                 context->pixels[pixel_index].red,
-                                 context->pixels[pixel_index].grn,
-                                 context->pixels[pixel_index].blu,
-                                 context->pixels[pixel_index].alp,
+                                 red,
+                                 grn,
+                                 blu,
+                                 alp,
                                  context->src_path);
                         result += RESULT_ERROR;
                     }
+                    context->pixels[pixel_index].red = red;
+                    context->pixels[pixel_index].blu = blu;
+                    context->pixels[pixel_index].grn = grn;
                 }
                 pixel_index++;
             }
@@ -339,9 +330,9 @@ void conv_image(ConvertContext *context) {
 	context->results.alpha_type  = alpha_type;
 	context->results.bkgnd_type  = (bkgnd_selected == BKGND_NONE || bkgnd_selected == BKGND_BLACK || bkgnd_selected == BKGND_WHITE ? bkgnd_selected : BKGND_OTHER);
 	context->results.bkgnd_ratio = bkgnd_ratio;
-	context->results.bkgnd_red   = (bkgnd_selected == BKGND_NONE ? 0.0 : backgrounds[bkgnd_selected].red);
-	context->results.bkgnd_grn   = (bkgnd_selected == BKGND_NONE ? 0.0 : backgrounds[bkgnd_selected].grn);
-	context->results.bkgnd_blu   = (bkgnd_selected == BKGND_NONE ? 0.0 : backgrounds[bkgnd_selected].blu);
+	context->results.bkgnd_red   = (bkgnd_selected == BKGND_NONE ? 0 : backgrounds[bkgnd_selected].red);
+	context->results.bkgnd_grn   = (bkgnd_selected == BKGND_NONE ? 0 : backgrounds[bkgnd_selected].grn);
+	context->results.bkgnd_blu   = (bkgnd_selected == BKGND_NONE ? 0 : backgrounds[bkgnd_selected].blu);
 
     if (backgrounds != NULL) {
         free(backgrounds);
@@ -364,7 +355,7 @@ void save_image(ConvertContext *context) {
 	
     // get pixel data
     if (context->hasAlphaChannel == MagickTrue) {
-        if (MagickImportImagePixels(context->mw, 0, 0, context->imageWidth, context->imageHeight, "ARGB", DoublePixel, context->pixels)  == MagickFalse) {
+        if (MagickImportImagePixels(context->mw, 0, 0, context->imageWidth, context->imageHeight, "ARGB", CharPixel, context->pixels)  == MagickFalse) {
             error_desc = MagickGetException(context->mw, &error_type);
             asprintf(&context->results.message, "Error exporting pixel data (%s): %s\n",error_desc,context->src_path);
             error_desc = (char *)MagickRelinquishMemory(error_desc);

@@ -510,7 +510,7 @@ void finish_image(ConvertContext *context) {
 				case BKGND_OTHER:
 					images_alpha_other++;
 					if (context->options.verbose)
-						printf("(%g %g %g)",context->results.bkgnd_red, context->results.bkgnd_grn, context->results.bkgnd_blu);
+						printf("(%hhu %hhu %hhu)",context->results.bkgnd_red, context->results.bkgnd_grn, context->results.bkgnd_blu);
 					break;
 				default:
 					break;

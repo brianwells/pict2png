@@ -39,10 +39,10 @@
 #define BKGND_OTHER 2
 
 typedef struct pixel_data {
-    double alp;
-    double red;
-    double grn;
-    double blu;
+    unsigned char alp;
+    unsigned char red;
+    unsigned char grn;
+    unsigned char blu;
 } PixelData;
 
 typedef struct convert_options {
@@ -60,9 +60,9 @@ typedef struct convert_results {
     int alpha_type;
     int bkgnd_type;
     double bkgnd_ratio;
-    double bkgnd_red;
-    double bkgnd_grn;
-    double bkgnd_blu;
+    unsigned char bkgnd_red;
+    unsigned char bkgnd_grn;
+    unsigned char bkgnd_blu;
 } ConvertResults;
 
 typedef struct convert_context {
