@@ -22,7 +22,7 @@
  *
  */
 
-#define PICT2PNG_VERSION   "1.0"
+#define PICT2PNG_VERSION   "1.0.1"
 #define PICT2PNG_COPYRIGHT "\n  Copyright (C) 2010 Brian D. Wells\n"
 #define PICT2PNG_CONTACT   "\n  Author: Brian D. Wells <spam_brian@me.com>\n"
 #define PICT2PNG_LICENSE   "\n  pict2png comes with ABSOLUTELY NO WARRANTY. It is free software,\n  and you are welcome to redistribute it under certain conditions.\n  See the man page (type 'man pict2png') for details.\n"
