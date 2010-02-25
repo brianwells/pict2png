@@ -329,20 +329,6 @@ void conv_image(ConvertContext *context) {
                         grn = (int)roundf((float)((grn - bkgnd_grn) * 255) / (float)alp);
                         blu = (int)roundf((float)((blu - bkgnd_blu) * 255) / (float)alp);
                     }
-                    // verify pixel data is within range
-                    if (red < 0 || red > 255 ||
-                        grn < 0 || grn > 255 ||
-                        blu < 0 || blu > 255 ||
-                        alp < 0 || alp > 255) {
-                        asprintf(&context->results.message, "pixel %06ld out of range (R:%d G:%d B:%d A:%d) for image: %s\n",
-                                 pixel_index,
-                                 red,
-                                 grn,
-                                 blu,
-                                 alp,
-                                 context->src_path);
-                        result += RESULT_ERROR;
-                    }
                     context->pixels[pixel_index].red = red;
                     context->pixels[pixel_index].blu = blu;
                     context->pixels[pixel_index].grn = grn;
