@@ -116,8 +116,12 @@ void conv_image(ConvertContext *context) {
     int blu;
     int alp;
     int inv;
+    int bkgnd_red;
+    int bkgnd_grn;
+    int bkgnd_blu;
     int alpha_other = 0;
     int alpha_match = 0;
+    int alpha_marginal = 0;
     int alpha_type = ALPHA_TYPE_NONE;
 
     // check alpha
@@ -222,6 +226,10 @@ void conv_image(ConvertContext *context) {
                         blu <= alp && blu >= 0 &&
                         grn <= alp && grn >= 0) {
                         alpha_match++;
+					} else if (red <= alp + 1 && red >= -1 &&
+							   blu <= alp + 1 && blu >= -1 &&
+							   grn <= alp + 1 && grn >= -1) {
+						alpha_marginal++;
                     } else {
                         alpha_other++;
                     }
@@ -244,7 +252,7 @@ void conv_image(ConvertContext *context) {
                         result += RESULT_WARNING;
                     }
                 }
-            } else if (alpha_match == 0 && alpha_other == 0) {
+            } else if (alpha_match == 0 && alpha_other == 0 && alpha_marginal == 0) {
                 // no translucent pixels!!!
                 alpha_type = ALPHA_TYPE_UNKNOWN;
                 asprintf(&context->results.message, "Unable to determine alpha type (no translucent pixels): %s\n", context->src_path);
@@ -281,6 +289,11 @@ void conv_image(ConvertContext *context) {
                     if (bkgnd_selected == BKGND_BLACK) {
                         // this one is easy...
                         // Fg = Comp / A
+                        if (alpha_marginal != 0) {
+                            red = (red > alp ? alp : red);
+                            grn = (grn > alp ? alp : grn);
+                            blu = (blu > alp ? alp : blu);
+                        }
                         if (red != 0)
                             red = (int)roundf((float)(red * 255) / (float)alp);
                         if (grn != 0)
@@ -290,6 +303,11 @@ void conv_image(ConvertContext *context) {
                     } else if (bkgnd_selected == BKGND_WHITE) {
                         // much harder...
                         // Fg = (Comp - (1 - A)) / A
+                        if (alpha_marginal != 0) {
+                            red = (red < inv ? inv : red);
+                            grn = (grn < inv ? inv : grn);
+                            blu = (blu < inv ? inv : blu);
+                        }
                         if (red != 255)
                             red = (int)roundf((float)((red - inv) * 255) / (float)alp);
                         if (grn != 255)
@@ -299,9 +317,17 @@ void conv_image(ConvertContext *context) {
                     } else {
                         // way harder!  (not sure if this really works)
                         // Fg = (Comp - ((1 - A) * Bg)) / A
-                        red = (int)roundf((float)((red - (int)roundf((float)(inv * backgrounds[bkgnd_selected].red)/255.0)) * 255) / (float)alp);
-                        grn = (int)roundf((float)((grn - (int)roundf((float)(inv * backgrounds[bkgnd_selected].grn)/255.0)) * 255) / (float)alp);
-                        blu = (int)roundf((float)((blu - (int)roundf((float)(inv * backgrounds[bkgnd_selected].blu)/255.0)) * 255) / (float)alp);
+                        bkgnd_red = (int)roundf((float)(inv * backgrounds[bkgnd_selected].red)/255.0);
+                        bkgnd_grn = (int)roundf((float)(inv * backgrounds[bkgnd_selected].grn)/255.0);
+                        bkgnd_blu = (int)roundf((float)(inv * backgrounds[bkgnd_selected].blu)/255.0);
+                        if (alpha_marginal != 0) {
+                            red = (red < bkgnd_red ? bkgnd_red : red);
+                            grn = (grn < bkgnd_grn ? bkgnd_grn : grn);
+                            blu = (blu < bkgnd_blu ? bkgnd_blu : blu);
+                        }
+                        red = (int)roundf((float)((red - bkgnd_red) * 255) / (float)alp);
+                        grn = (int)roundf((float)((grn - bkgnd_grn) * 255) / (float)alp);
+                        blu = (int)roundf((float)((blu - bkgnd_blu) * 255) / (float)alp);
                     }
                     // verify pixel data is within range
                     if (red < 0 || red > 255 ||
