@@ -135,15 +135,17 @@ void conv_image(ConvertContext *context) {
         }
         
         // load starting background metrics
-        backgrounds[BKGND_BLACK].red = 0;
-        backgrounds[BKGND_BLACK].grn = 0;
-        backgrounds[BKGND_BLACK].blu = 0;
-        backgrounds[BKGND_BLACK].count = 0;        
-        backgrounds[BKGND_WHITE].red = 255;
-        backgrounds[BKGND_WHITE].grn = 255;
-        backgrounds[BKGND_WHITE].blu = 255;
-        backgrounds[BKGND_WHITE].count = 0;        
-        bkgnd_count = 2;
+		if (result == RESULT_OK) {
+			backgrounds[BKGND_BLACK].red = 0;
+			backgrounds[BKGND_BLACK].grn = 0;
+			backgrounds[BKGND_BLACK].blu = 0;
+			backgrounds[BKGND_BLACK].count = 0;        
+			backgrounds[BKGND_WHITE].red = 255;
+			backgrounds[BKGND_WHITE].grn = 255;
+			backgrounds[BKGND_WHITE].blu = 255;
+			backgrounds[BKGND_WHITE].count = 0;        
+			bkgnd_count = 2;
+		}
         
         // analyze image
         
