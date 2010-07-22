@@ -79,7 +79,7 @@ int process_path(char *src_path, char *dst_path, char *tmp_path, int complain) {
     ConvertContext *convert_context;
         
     char *valid_exts[] = { "pict", "pct", "pic", 0 };
-    int idx;
+    int idx, ext_len;
         
     // check source path
     if (lstat(src_path, &finfo) == -1) {
@@ -182,12 +182,14 @@ int process_path(char *src_path, char *dst_path, char *tmp_path, int complain) {
             strncpy(tmp_path, src_path, PATH_MAX - 1);
             dir_path = strdup(dirname(tmp_path));
             file_ext = strrchr(file_name, '.');
+			ext_len = 0;
             // check file extension
             idx = 0;
             while (file_ext != NULL) {
                 if (valid_exts[idx] == 0) {
                     file_ext = NULL;
                 } else if (strcasecmp(valid_exts[idx], file_ext + 1) == 0) {
+					ext_len = strlen(file_ext);
                     break;
                 }
                 idx++;
@@ -206,14 +208,14 @@ int process_path(char *src_path, char *dst_path, char *tmp_path, int complain) {
                 // check destination path
                 if (dst_path == NULL) {
                     // same as src_path, but with proper extension
-                    if ((strlen(file_name) - strlen(file_ext) + 6) > (PATH_MAX - strlen(dir_path))) {
+                    if ((strlen(file_name) - ext_len + 6) > (PATH_MAX - strlen(dir_path))) {
                         // buffer overflow
                         fprintf(stderr, "Buffer overflow appending: %s\n", src_path);
                         result += RESULT_ERROR;
                     } else {
                         strncpy(tmp_path, dir_path, PATH_MAX - 1);
                         strncat(tmp_path, "/", 1);
-                        strncat(tmp_path, file_name, strlen(file_name) - strlen(file_ext));
+                        strncat(tmp_path, file_name, strlen(file_name) - ext_len);
                         strncat(tmp_path, ".png", 4);
                         dst_path = tmp_path;
                     }
@@ -221,14 +223,14 @@ int process_path(char *src_path, char *dst_path, char *tmp_path, int complain) {
                 while (dst_path != NULL && lstat(dst_path, &finfo) != -1) {
                     if (S_ISDIR(finfo.st_mode)) {
                         // directory, so put file inside
-                        if ((strlen(file_name) - strlen(file_ext) + 6) > (PATH_MAX - strlen(dst_path))) {
+                        if ((strlen(file_name) - ext_len + 6) > (PATH_MAX - strlen(dst_path))) {
                             // buffer overflow
                             fprintf(stderr, "Buffer overflow appending: %s\n", dst_path);
                             result += RESULT_ERROR;
                         } else {
                             strncpy(tmp_path, dst_path, PATH_MAX - 1);
                             strncat(tmp_path, "/", 1);
-                            strncat(tmp_path, file_name, strlen(file_name) - strlen(file_ext));
+                            strncat(tmp_path, file_name, strlen(file_name) - ext_len);
                             strncat(tmp_path, ".png", 4);
                             dst_path = tmp_path;
                         }
