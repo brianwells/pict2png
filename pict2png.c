@@ -1,7 +1,7 @@
 /*
  *  pict2png.c
  *
- *  Copyright (C) 2010 Brian D. Wells
+ *  Copyright (C) 2010, 2011 Brian D. Wells
  *
  *  This file is part of pict2png.
  *

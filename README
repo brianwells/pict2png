@@ -1,4 +1,4 @@
-pict2png v1.0.3
+pict2png v1.0.4
 
 pict2png is a utility for converting files in the Macintosh PICT image
 format to the PNG image format.  Images with an associated (premulti-
@@ -16,7 +16,7 @@ view his blog entry about pict2png.
 <http://www.briandwells.com/main/Blog/Entries/2010/2/13_Converting_PICTs_to_PNGs.html>
 
 
-Copyright (C) 2010 Brian D. Wells
+Copyright (C) 2010, 2011 Brian D. Wells
 
 pict2png is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free
