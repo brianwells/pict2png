@@ -343,7 +343,7 @@ void conv_image(ConvertContext *context) {
         }
     }
 
-	if (alpha_type == ALPHA_TYPE_UNKNOWN)
+	if (alpha_type == ALPHA_TYPE_UNKNOWN || context->hasAlphaChannel == MagickFalse)
 		alpha_type = ALPHA_TYPE_NONE;
 
 	// fill in results
