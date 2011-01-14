@@ -401,7 +401,7 @@ int main (int argc, const char * argv[]) {
         printf("    --quiet          Do not show summary at end of process\n");
         printf("    --dry-run        Do not write converted files to disk\n");
         printf("    --delete         Delete original PICT files (use with caution)\n");
-		printf("    --alpha=x        Set alpha channel type (none|unassociated|associated)");
+		printf("    --alpha=x        Set alpha channel type (none|unassociated|associated)\n");
         printf("    --force          Force conversion of files that have issues\n");
         printf("    --bkgnd-ratio=x  Adjust required ratio of background color\n");
         printf("    --help           Display usage information.\n");
