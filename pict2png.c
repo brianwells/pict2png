@@ -122,10 +122,11 @@ void conv_image(ConvertContext *context) {
     int alpha_other = 0;
     int alpha_match = 0;
     int alpha_marginal = 0;
-    int alpha_type = ALPHA_TYPE_NONE;
+    int alpha_type = context->options.manual_alpha;	// defaults to ALPHA_TYPE_UNKNOWN
 
     // check alpha
-    if (result == RESULT_OK && context->hasAlphaChannel == MagickTrue) {
+    if (result == RESULT_OK && context->hasAlphaChannel == MagickTrue &&
+		(alpha_type == ALPHA_TYPE_UNKNOWN || alpha_type == ALPHA_TYPE_ASSOCIATED)) {
 
         // allocate buffer for background metrics
         backgrounds = malloc(sizeof(BackgroundMetric) * bkgnd_size);
@@ -238,7 +239,14 @@ void conv_image(ConvertContext *context) {
                 }
                 pixel_index++;
             }
-            
+
+			// when associated alpha is specified, adjust pixel counts to make it happen
+			if (alpha_type == ALPHA_TYPE_ASSOCIATED) {
+				alpha_match = (alpha_match > 0 ? alpha_match : 1);
+				alpha_marginal += alpha_other;
+				alpha_other = 0;
+			}
+
             // If all the translucent pixels fall within the proper range, then
             // this the alpha is likely pre-multiplied (associated) over background
             if (alpha_match > 0 && alpha_other == 0) {
@@ -254,17 +262,12 @@ void conv_image(ConvertContext *context) {
                         result += RESULT_WARNING;
                     }
                 }
-            } else if (alpha_match == 0 && alpha_other == 0 && alpha_marginal == 0) {
-                // no translucent pixels!!!
-                alpha_type = ALPHA_TYPE_UNKNOWN;
-                asprintf(&context->results.message, "Unable to determine alpha type (no translucent pixels): %s\n", context->src_path);
-                result += RESULT_WARNING;
             } else {
                 // straight (unassociated) alpha
                 alpha_type = ALPHA_TYPE_UNASSOCIATED;
             }
         }
-        
+
         if (result == RESULT_OK && (alpha_type == ALPHA_TYPE_ASSOCIATED)) {
             // correct image
             pixel_index = 0;
@@ -340,6 +343,9 @@ void conv_image(ConvertContext *context) {
         }
     }
 
+	if (alpha_type == ALPHA_TYPE_UNKNOWN)
+		alpha_type = ALPHA_TYPE_NONE;
+
 	// fill in results
 	context->results.alpha_type  = alpha_type;
 	context->results.bkgnd_type  = (bkgnd_selected == BKGND_NONE || bkgnd_selected == BKGND_BLACK || bkgnd_selected == BKGND_WHITE ? bkgnd_selected : BKGND_OTHER);
@@ -387,8 +393,11 @@ void save_image(ConvertContext *context) {
         }
     }
 	
+	// activate/deactivate alpha channel
+	MagickSetImageAlphaChannel(context->mw, (context->results.alpha_type == ALPHA_TYPE_NONE ? DeactivateAlphaChannel : ActivateAlphaChannel));
+
     // make sure image is saved as RGB and not crunched down to grayscale
-	MagickSetType(context->mw, (context->hasAlphaChannel == MagickTrue ? TrueColorMatteType : TrueColorType));
+	MagickSetType(context->mw, (context->results.alpha_type == ALPHA_TYPE_NONE ? TrueColorType : TrueColorMatteType));
 	
 	// save image to disk
     if (result == RESULT_OK) {

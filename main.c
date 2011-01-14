@@ -47,6 +47,7 @@ static ConvertOptions convert_options = {
     0,      // dry_run OFF
     0,      // force   OFF
     0,      // delete  OFF
+	0,		// manual_alpha OFF
     0.8     // background at least 80%
 };
 
@@ -297,6 +298,7 @@ int main (int argc, const char * argv[]) {
         { "bkgnd-ratio", required_argument, NULL, 'b' },
         { "delete",         no_argument,    NULL, 'd' },
         { "force",          no_argument,    NULL, 'f' },
+        { "alpha",       required_argument, NULL, 'a' },
         { "quiet",          no_argument,    NULL, 'q' },
         { "verbose",        no_argument,    NULL, 'v' },
         { "dry-run",        no_argument,    NULL, 'n' },
@@ -304,11 +306,20 @@ int main (int argc, const char * argv[]) {
         { "help",           no_argument,    NULL, 'h' },
         { NULL,             0,              NULL, 0 }
     };
-    static char *options_str = "b:dfqvnVh";
+    static char *options_str = "b:dfa:qvnVh";
     
     int opt = 0;
     while ((opt = getopt_long(argc, (char **)argv, options_str, options, NULL)) != -1) {
         switch (opt) {
+			case 'a':
+				if (strcasecmp(optarg, "none") == 0) {
+					convert_options.manual_alpha = ALPHA_TYPE_NONE;
+				} else if (strcasecmp(optarg, "unassociated") == 0 || strcasecmp(optarg, "straight") == 0) {
+					convert_options.manual_alpha = ALPHA_TYPE_UNASSOCIATED;
+				} else if (strcasecmp(optarg, "associated") == 0 || strcasecmp(optarg, "premultiplied") == 0) {
+					convert_options.manual_alpha = ALPHA_TYPE_ASSOCIATED;
+				}
+				break;
             case 'b':
                 convert_options.bkgnd_ratio = strtod(optarg, &endp);
                 if (*endp != '\0' || convert_options.bkgnd_ratio <= 0.0 || convert_options.bkgnd_ratio > 1.0) {
@@ -390,6 +401,7 @@ int main (int argc, const char * argv[]) {
         printf("    --quiet          Do not show summary at end of process\n");
         printf("    --dry-run        Do not write converted filesto disk\n");
         printf("    --delete         Delete original PICT files (use with caution)\n");
+		printf("    --alpha=x        Set alpha channel type (none|unassociated|associated)");
         printf("    --force          Force conversion of files that have issues\n");
         printf("    --bkgnd-ratio=x  Adjust required ratio of background color\n");
         printf("    --help           Display usage information.\n");

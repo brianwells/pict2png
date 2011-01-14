@@ -51,6 +51,7 @@ typedef struct convert_options {
     int dry_run;
     int force;
     int delete_original;
+	int manual_alpha;
     double bkgnd_ratio;
 } ConvertOptions;
 
